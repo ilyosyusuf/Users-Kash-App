@@ -9,16 +9,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final UserRepository userRepository;
 
   HomeBloc(this.userRepository) : super(HomeLoadingState()) {
-    initialFunction();
-    on<RefreshApiEvent>(
-      refreshData
-    );
+    on<LoadApiEvent>(loadData);
+    on<RefreshApiEvent>(refreshData);
   }
 
-  initialFunction() {
-    on<LoadApiEvent>(
-      (event, emit) async {
-            try {
+  FutureOr loadData(LoadApiEvent refreshEvent, Emitter emit) async {
+    try {
       emit(HomeLoadingState());
       final users = await userRepository.getUsers();
       print("initial");
@@ -26,8 +22,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     } catch (e) {
       emit(HomeErrorState(message: "Error at loading user data"));
     }
-      },
-    );
   }
 
   FutureOr refreshData(RefreshApiEvent refreshEvent, Emitter emit) async {
@@ -40,5 +34,4 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(HomeErrorState(message: "Error at refreshing user data"));
     }
   }
-
 }
