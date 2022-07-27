@@ -41,18 +41,4 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
   }
 
-  //     @override
-  // Stream<HomeState> mapEventToState(HomeEvent event) async* {
-  //   if (event is refreshApiEvent) {
-  //     yield HomeLoadingState();
-  //     final users = await userRepository.getUsers();
-  //     print("yield ishladi");
-  //     yield HomeLoadedState(users!);
-  //     print("yield ishladi");
-  //     try {} catch (e) {
-  //       print("yield xato");
-  //     }
-  // }
-  // }
-
 }
