@@ -18,17 +18,21 @@ class ShimmerListTileWidget extends StatelessWidget {
       margin: const EdgeInsets.all(20),
       width: context.width,
       child: ListTile(
-        leading: ShimmerDecoration.instance.shimmer(
-          child: CircleAvatar(
-              radius: 25, ),
-        ),
-        title: ShimmerDecoration.instance.shimmer(child:
-         SizedBox(width: 100,height: 10,)
-        ),
-        subtitle: ShimmerDecoration.instance.shimmer(child: 
-        SizedBox(width: 80, height: 10,)
-        )
-      ),
+          leading: ShimmerDecoration.instance.shimmer(
+            child: const CircleAvatar(
+              radius: 25,
+            ),
+          ),
+          title: ShimmerDecoration.instance.shimmer(
+              child: const SizedBox(
+            width: 100,
+            height: 10,
+          )),
+          subtitle: ShimmerDecoration.instance.shimmer(
+              child: const SizedBox(
+            width: 80,
+            height: 10,
+          ))),
     );
   }
 }
