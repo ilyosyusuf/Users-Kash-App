@@ -17,15 +17,18 @@ class HiveService {
     await Hive.openBox<HiveModel>('hiveBox');
   }
 
-  Future putData(UserModel data) async {
-    final box = HiveModel()
-      ..id = data.id
-      ..name = data.name
-      ..email = data.email
-      ..gender = data.gender
-      ..status = data.status;
-    Boxes.instance.getHiveBox().add(box);
+  Future putData(List<UserModel> data) async {
+    for (var i = 0; i < data.length; i++) {
+       final box = HiveModel()
+      ..id = data[i].id
+      ..name = data[i].name
+      ..email = data[i].email
+      ..gender = data[i].gender
+      ..status = data[i].status;
+    Boxes.instance.getHiveBox().add(box);  
     print(box.name);
+    }
+
   }
 
   Future deleteData(HiveModel data) async {

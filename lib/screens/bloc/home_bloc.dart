@@ -10,7 +10,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState>{
   HomeBloc(this.userRepository):super(HomeLoadingState()){
     on<HomeEvent>((event, emit) async{
       final users = await userRepository.getUsers();
-      emit(HomeLoadedState(users));
+      emit(HomeLoadedState(users!));
     });
   }
 }

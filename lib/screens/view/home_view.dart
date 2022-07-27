@@ -18,56 +18,74 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(create: (context){
-      var data = RepositoryProvider.of<UserRepository>(context);
-      return HomeBloc(data)..add(loadApiEvent());
-    },
-    child: scaffoldMethod(context)
-    );
+    return BlocProvider(
+        create: (context) {
+          var data = RepositoryProvider.of<UserRepository>(context);
+          return HomeBloc(data)..add(loadApiEvent());
+        },
+        child: scaffoldMethod(context));
   }
 
   Scaffold scaffoldMethod(BuildContext context) => Scaffold(
-    body: BlocConsumer<HomeBloc, HomeState>(
-      listener: (context, state) {
-        
-      },
-      builder: (context, state){
-        if(state is HomeLoadingState){
-          return Center(child: CircularProgressIndicator.adaptive(),);
-        } if (state is HomeErrorState) {
-          return Text("xato");
-        } else if(state is HomeLoadedState) {
-          // return ValueListenableBuilder<Box<HiveModel>>(
-          //         valueListenable: Boxes.instance.getHiveBox().listenable(),
-          //         builder: (context, box, i) {
-          //           final users =
-          //               box.values.toList().cast<HiveModel>();
-          //           return ListView.builder(
-          //               itemCount: users.length,
-          //               itemBuilder: (context, i) {
-          //                 return Dismissible(
-          //                   key: UniqueKey(),
-          //                   onDismissed: (v) {
-          //                     HiveService.instance
-          //                         .deleteData(users[i]);
-          //                   },
-          //                   child: Text(users[i].name),
-          //                 );
-          //               });
-          //         },
-          //       );
-          return ListView.builder(
-            itemCount: state.props.length,
-            itemBuilder: (context, i){
-            return Dismissible(
-              key: UniqueKey(),
-              onDismissed: (v){},
-              child: ListTileWidget(itemColor: ColorConst.kSecondaryColor, leadingColor: ColorConst.kPrimaryColor, userId: state.props[i].id.toString(), userName: state.props[i].name, userEmail: state.props[i].email));
-          });
-        } else{
-          return Container();
-        }
-      },
-      ),
-  );
+        body: SafeArea(
+          child: BlocConsumer<HomeBloc, HomeState>(
+            listener: (context, state) {},
+            builder: (context, state) {
+              if (state is HomeLoadingState) {
+                return Center(
+                  child: CircularProgressIndicator.adaptive(),
+                );
+              }
+              if (state is HomeErrorState) {
+                return Text("xato");
+              } else if (state is HomeLoadedState) {
+                return RefreshIndicator(
+                  onRefresh: () async {
+                    
+                  },
+                  child: ValueListenableBuilder<Box<HiveModel>>(
+                    valueListenable: Boxes.instance.getHiveBox().listenable(),
+                    builder: (context, box, i) {
+                      final users = box.values.toList().cast<HiveModel>();
+                      return ListView.builder(
+                          itemCount: users.length,
+                          itemBuilder: (context, i) {
+                            return Dismissible(
+                              direction: DismissDirection.endToStart,
+                                key: UniqueKey(),
+                                onDismissed: (v) {
+                                  HiveService.instance.deleteData(users[i]);
+                                },
+                                child: ListTileWidget(
+                                    itemColor: ColorConst.kSecondaryColor,
+                                    leadingColor: ColorConst.kPrimaryColor,
+                                    userId: users[i].id.toString(),
+                                    userName: users[i].name,
+                                    userEmail: users[i].email));
+                          });
+                    },
+                  ),
+                );
+                // return RefreshIndicator(
+                //     onRefresh: () async {},
+                //     child: ListView.builder(
+                //         itemCount: state.props.length,
+                //         itemBuilder: (context, i) {
+                //           return Dismissible(
+                //               key: UniqueKey(),
+                //               onDismissed: (v) {},
+                //               child: ListTileWidget(
+                //                   itemColor: ColorConst.kSecondaryColor,
+                //                   leadingColor: ColorConst.kPrimaryColor,
+                //                   userId: state.props[i].id.toString(),
+                //                   userName: state.props[i].name,
+                //                   userEmail: state.props[i].email));
+                //         }));
+              } else {
+                return Container();
+              }
+            },
+          ),
+        ),
+      );
 }
