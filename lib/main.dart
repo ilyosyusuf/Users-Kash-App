@@ -28,8 +28,6 @@ class MyApp extends StatelessWidget {
         home: MultiRepositoryProvider(providers: [
           RepositoryProvider(create: (context) => UserRepository())
         ], child: HomeView()),
-        // initialRoute: '/homeview',
-        // onGenerateRoute: AllRoutes.instance.onGenerateRoute,
         );
   }
 }

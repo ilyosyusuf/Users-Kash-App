@@ -7,7 +7,6 @@ abstract class HomeState extends Equatable {
 }
 
 class HomeLoadingState extends HomeState {
-  // HomeLoadingState();
   @override
   List<Object> get props => [];
 }

@@ -51,10 +51,11 @@ class HomeView extends StatelessWidget {
               builder: (context, state) {
                 if (state is HomeLoadingState) {
                   return ListView.builder(
-                      itemCount: 15,
-                      itemBuilder: (context, i) {
-                        return ShimmerListTileWidget();
-                      });
+                    itemCount: 15,
+                    itemBuilder: (context, i) {
+                      return ShimmerListTileWidget();
+                    },
+                  );
                 }
                 if (state is HomeErrorState) {
                   return Center(child: Text(state.message));

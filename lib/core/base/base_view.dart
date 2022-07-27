@@ -26,7 +26,6 @@ class BaseView<T> extends StatefulWidget {
 
     @override
     void initState() {
-    // TODO: implement initState
     super.initState();
     subscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult result){
       setState((){
@@ -39,9 +38,9 @@ class BaseView<T> extends StatefulWidget {
   @override
   Widget build(BuildContext context) {
     return internetStatus == ConnectivityResult.none ? 
-    Scaffold(
-      body: Center(child: Text("No Internet Connection :("),),
-    )
+    
+      Center(child: Text("No Internet Connection :("))
+    
     : widget.OnPageBuilder!(context, widget.viewModel);
   }
   

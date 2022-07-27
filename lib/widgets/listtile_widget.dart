@@ -22,8 +22,8 @@ class ListTileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxAllDecoration.decor(color: itemColor),
-      margin: EdgeInsets.all(20),
+      decoration: BoxAllDecoration.instance.decor(color: itemColor),
+      margin: const EdgeInsets.all(20),
       width: context.width,
       child: ListTile(
         leading: CircleAvatar(

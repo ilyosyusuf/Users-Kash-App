@@ -29,25 +29,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     try {
       emit(HomeLoadingState());
       final users = await userRepository.getUsers();
-      print("yield ishladi");
+      print("refresh");
       emit(HomeLoadedState(users!));
     } catch (e) {
       emit(HomeErrorState(message: "Error at refreshing user data"));
     }
   }
-
-  //     @override
-  // Stream<HomeState> mapEventToState(HomeEvent event) async* {
-  //   if (event is refreshApiEvent) {
-  //     yield HomeLoadingState();
-  //     final users = await userRepository.getUsers();
-  //     print("yield ishladi");
-  //     yield HomeLoadedState(users!);
-  //     print("yield ishladi");
-  //     try {} catch (e) {
-  //       print("yield xato");
-  //     }
-  // }
-  // }
 
 }

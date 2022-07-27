@@ -1,13 +1,9 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:users/core/boxes/boxes.dart';
 import 'package:users/core/constants/url_const.dart';
 import 'package:users/models/usermodel/user_model.dart';
-import 'package:users/screens/bloc/home_bloc.dart';
-import 'package:users/screens/bloc/home_state.dart';
 import 'package:users/services/hive_service.dart';
 
 class UserRepository{
@@ -21,7 +17,9 @@ class UserRepository{
         print(Boxes.instance.getUserBox().values.toList()[0].name.toString());
     return (res.data as List).map((e) => UserModel.fromJson(e)).toList();
     } else{
-      print("serverda xato bor");      
+      print("serverda xato bor"); 
+      return throw Exception("serverda xato bor");
+
     }
     } catch (e) {
       return throw Exception(e);

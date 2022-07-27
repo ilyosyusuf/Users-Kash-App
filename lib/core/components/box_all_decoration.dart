@@ -5,7 +5,7 @@ class BoxAllDecoration {
   static BoxAllDecoration get instance => _instance;
   BoxAllDecoration._init();
 
-  static decor({Color? color, Color? borderColor = Colors.transparent}) =>
+  decor({Color? color, Color? borderColor = Colors.transparent}) =>
       BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(20.0),

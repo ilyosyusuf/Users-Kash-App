@@ -14,25 +14,26 @@ class ShimmerListTileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxAllDecoration.decor(color: ColorConst.kSecondaryColor),
+      decoration: BoxAllDecoration.instance.decor(color: ColorConst.kSecondaryColor),
       margin: const EdgeInsets.all(20),
       width: context.width,
       child: ListTile(
-          leading: ShimmerDecoration.instance.shimmer(
-            child: const CircleAvatar(
-              radius: 25,
-            ),
+        leading: ShimmerDecoration.instance.shimmer(
+          child: const CircleAvatar(
+            radius: 25,
           ),
-          title: ShimmerDecoration.instance.shimmer(
-              child: const SizedBox(
-            width: 100,
-            height: 10,
-          )),
-          subtitle: ShimmerDecoration.instance.shimmer(
-              child: const SizedBox(
-            width: 80,
-            height: 10,
-          ))),
+        ),
+        title: ShimmerDecoration.instance.shimmer(
+            child: Container(
+          color: ColorConst.kGreyColor,
+          height: context.height * 0.01,
+        )),
+        subtitle: ShimmerDecoration.instance.shimmer(
+            child: Container(
+          color: ColorConst.kGreyColor,
+          height: context.height * 0.01,
+        )),
+      ),
     );
   }
 }
