@@ -23,7 +23,7 @@ class HomeView extends StatelessWidget {
     return BlocProvider(
         create: (context) {
           var data = RepositoryProvider.of<UserRepository>(context);
-          return HomeBloc(data)..add(loadApiEvent());
+          return HomeBloc(data)..add(LoadApiEvent());
         },
         child: scaffoldMethod(context));
   }
@@ -63,7 +63,7 @@ class HomeView extends StatelessWidget {
                   return RefreshIndicator(
                     onRefresh: () async {
                       HomeBloc homeBloc = BlocProvider.of<HomeBloc>(context);
-                      homeBloc.add(refreshApiEvent());
+                      homeBloc.add(RefreshApiEvent());
                     },
                     child: ValueListenableBuilder<Box<UserModel>>(
                       valueListenable: Boxes.instance.getUserBox().listenable(),

@@ -4,13 +4,13 @@ abstract class HomeEvent extends Equatable {
   const HomeEvent();
 }
 
-class loadApiEvent extends HomeEvent{
+class LoadApiEvent extends HomeEvent{
   @override
   List<Object?> get props => [];
   
 }
 
-class refreshApiEvent extends HomeEvent{
+class RefreshApiEvent extends HomeEvent{
   @override
   List<Object?> get props => [];
   
