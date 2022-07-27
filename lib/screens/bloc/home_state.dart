@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:users/models/user_model.dart';
+import 'package:users/models/usermodel/user_model.dart';
 import 'package:users/repositories/user_repository.dart';
 
 abstract class HomeState extends Equatable {

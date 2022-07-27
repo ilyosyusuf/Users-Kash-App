@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:users/core/constants/url_const.dart';
-import 'package:users/models/user_model.dart';
+import 'package:users/models/usermodel/user_model.dart';
 
 class UserRepository{
   Future<List<UserModel>> getUsers() async{
