@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:users/config/init/navigation/navigator.dart';
+import 'package:users/config/routes/page_routes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,9 +12,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'Users Kash App',
       theme: ThemeData(),
-      home: MyHomePage(),
+      navigatorKey: NavigationService.instance.navigatorKey,
+      initialRoute: '/homeview',
+      onGenerateRoute: AllRoutes.instance.onGenerateRoute,
     );
   }
 }
