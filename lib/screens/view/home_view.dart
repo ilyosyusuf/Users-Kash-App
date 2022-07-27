@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:users/core/boxes/boxes.dart';
 import 'package:users/core/constants/color_const.dart';
-import 'package:users/models/hivemodel/hive_model.dart';
+import 'package:users/models/usermodel/user_model.dart';
 import 'package:users/repositories/user_repository.dart';
 import 'package:users/screens/bloc/home_bloc.dart';
 import 'package:users/screens/bloc/home_event.dart';
@@ -26,66 +26,63 @@ class HomeView extends StatelessWidget {
         child: scaffoldMethod(context));
   }
 
-  Scaffold scaffoldMethod(BuildContext context) => Scaffold(
-        body: SafeArea(
-          child: BlocConsumer<HomeBloc, HomeState>(
-            listener: (context, state) {},
-            builder: (context, state) {
-              if (state is HomeLoadingState) {
-                return Center(
-                  child: CircularProgressIndicator.adaptive(),
-                );
-              }
-              if (state is HomeErrorState) {
-                return Text("xato");
-              } else if (state is HomeLoadedState) {
-                return RefreshIndicator(
-                  onRefresh: () async {
-                    
+  Scaffold scaffoldMethod(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: BlocBuilder<HomeBloc, HomeState>(
+          builder: (context, state) {
+            if (state is HomeLoadingState) {
+              return Center(
+                child: CircularProgressIndicator.adaptive(),
+              );
+            }
+            if (state is HomeErrorState) {
+              return Text("xato");
+            } else if (state is HomeLoadedState) {
+              return RefreshIndicator(
+                onRefresh: () async {
+                  // await Future.delayed(Duration(milliseconds: 500));
+
+                  var data = RepositoryProvider.of<UserRepository>(context);
+                  // HomeBloc(data).refreshData(refreshEvent, emit)
+                   HomeBloc homeBloc = BlocProvider.of<HomeBloc>(context);
+                   homeBloc.add(refreshApiEvent());
+                },
+                child: ValueListenableBuilder<Box<UserModel>>(
+                  valueListenable: Boxes.instance.getUserBox().listenable(),
+                  builder: (context, box, i) {
+                    final users = box.values.toList().cast<UserModel>();
+                    return ListView.builder(
+                      itemCount: users.length,
+                      itemBuilder: (context, i) {
+                        return Dismissible(
+                          direction: DismissDirection.endToStart,
+                          key: UniqueKey(),
+                          background: Container(
+                              margin: const EdgeInsets.all(20),
+                              color: ColorConst.kRedColor),
+                          onDismissed: (v) {
+                            HiveService.instance.deleteData(users[i]);
+                          },
+                          child: ListTileWidget(
+                              itemColor: ColorConst.kSecondaryColor,
+                              leadingColor: ColorConst.kPrimaryColor,
+                              userId: users[i].id.toString(),
+                              userName: users[i].name,
+                              userEmail: users[i].email),
+                        );
+                      },
+                    );
                   },
-                  child: ValueListenableBuilder<Box<HiveModel>>(
-                    valueListenable: Boxes.instance.getHiveBox().listenable(),
-                    builder: (context, box, i) {
-                      final users = box.values.toList().cast<HiveModel>();
-                      return ListView.builder(
-                          itemCount: users.length,
-                          itemBuilder: (context, i) {
-                            return Dismissible(
-                              direction: DismissDirection.endToStart,
-                                key: UniqueKey(),
-                                onDismissed: (v) {
-                                  HiveService.instance.deleteData(users[i]);
-                                },
-                                child: ListTileWidget(
-                                    itemColor: ColorConst.kSecondaryColor,
-                                    leadingColor: ColorConst.kPrimaryColor,
-                                    userId: users[i].id.toString(),
-                                    userName: users[i].name,
-                                    userEmail: users[i].email));
-                          });
-                    },
-                  ),
-                );
-                // return RefreshIndicator(
-                //     onRefresh: () async {},
-                //     child: ListView.builder(
-                //         itemCount: state.props.length,
-                //         itemBuilder: (context, i) {
-                //           return Dismissible(
-                //               key: UniqueKey(),
-                //               onDismissed: (v) {},
-                //               child: ListTileWidget(
-                //                   itemColor: ColorConst.kSecondaryColor,
-                //                   leadingColor: ColorConst.kPrimaryColor,
-                //                   userId: state.props[i].id.toString(),
-                //                   userName: state.props[i].name,
-                //                   userEmail: state.props[i].email));
-                //         }));
-              } else {
-                return Container();
-              }
-            },
-          ),
+                ),
+              );
+            } else {
+              return Container();
+            }
+          },
         ),
-      );
+      ),
+      // ),
+    );
+  }
 }

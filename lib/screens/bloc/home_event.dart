@@ -9,3 +9,9 @@ class loadApiEvent extends HomeEvent{
   List<Object?> get props => [];
   
 }
+
+class refreshApiEvent extends HomeEvent{
+  @override
+  List<Object?> get props => [];
+  
+}

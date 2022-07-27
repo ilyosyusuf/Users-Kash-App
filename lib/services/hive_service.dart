@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:users/core/boxes/boxes.dart';
-import 'package:users/models/hivemodel/hive_model.dart';
 import 'package:users/models/usermodel/user_model.dart';
 
 class HiveService {
@@ -14,24 +13,14 @@ class HiveService {
   Future openBox()async{
     Directory appDocDir = await getApplicationDocumentsDirectory();
     Hive.init(appDocDir.path);
-    await Hive.openBox<HiveModel>('hiveBox');
+    await Hive.openBox<UserModel>('users');
   }
 
-  Future putData(List<UserModel> data) async {
-    for (var i = 0; i < data.length; i++) {
-       final box = HiveModel()
-      ..id = data[i].id
-      ..name = data[i].name
-      ..email = data[i].email
-      ..gender = data[i].gender
-      ..status = data[i].status;
-    Boxes.instance.getHiveBox().add(box);  
-    print(box.name);
-    }
-
+  Future addUser(List<UserModel> data)async{
+    await Boxes.instance.getUserBox().addAll(data);
   }
 
-  Future deleteData(HiveModel data) async {
+  Future deleteData(UserModel data) async {
     data.delete();
   }
 }

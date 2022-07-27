@@ -12,16 +12,10 @@ class UserRepository{
     try {
           Response res = await Dio().get(UrlConst.baseUrl);
     print("request ketdi");
-    // print(res.data == res.data);
     if(res.statusCode == HttpStatus.ok){
-      await Boxes.instance.getHiveBox().clear();
-      // if(Boxes.instance.getHiveBox().values.isEmpty){
-        // for (var i = 0; i < res.data.length; i++) {
-                await  HiveService.instance.putData((res.data as List).map((e) => UserModel.fromJson(e)).toList());
-        print(Boxes.instance.getHiveBox().values.toList()[0].name.toString());
-        // }
-
-      // }
+      await Boxes.instance.getUserBox().clear();
+                await  HiveService.instance.addUser((res.data as List).map((e) => UserModel.fromJson(e)).toList());
+        print(Boxes.instance.getUserBox().values.toList()[0].name.toString());
     return (res.data as List).map((e) => UserModel.fromJson(e)).toList();
     } else{
       print("serverda xato bor");
