@@ -22,6 +22,8 @@ class HomeLoadedState extends HomeState {
 }
 
 class HomeErrorState extends HomeState {
+  final String message;
+  HomeErrorState({required this.message});
     @override
   List<Object> get props => [];
 }

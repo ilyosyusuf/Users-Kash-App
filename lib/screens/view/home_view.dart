@@ -28,6 +28,21 @@ class HomeView extends StatelessWidget {
 
   Scaffold scaffoldMethod(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: ColorConst.kSecondaryColor,
+        
+        actions: const [
+          
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: CircleAvatar(
+              backgroundImage: AssetImage('assets/images/kashapp.png'),
+            ),
+          )
+        ],
+        title: const Text("Users"),
+      ),
       body: SafeArea(
         child: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
@@ -37,14 +52,10 @@ class HomeView extends StatelessWidget {
               );
             }
             if (state is HomeErrorState) {
-              return Text("xato");
+              return Center(child: Text(state.message));
             } else if (state is HomeLoadedState) {
               return RefreshIndicator(
                 onRefresh: () async {
-                  // await Future.delayed(Duration(milliseconds: 500));
-
-                  var data = RepositoryProvider.of<UserRepository>(context);
-                  // HomeBloc(data).refreshData(refreshEvent, emit)
                    HomeBloc homeBloc = BlocProvider.of<HomeBloc>(context);
                    homeBloc.add(refreshApiEvent());
                 },
@@ -77,12 +88,11 @@ class HomeView extends StatelessWidget {
                 ),
               );
             } else {
-              return Container();
+              return throw Exception("Error with states");
             }
           },
         ),
       ),
-      // ),
     );
   }
 }
