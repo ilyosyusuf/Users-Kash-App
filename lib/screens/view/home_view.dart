@@ -3,6 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:users/core/boxes/boxes.dart';
 import 'package:users/core/constants/color_const.dart';
 import 'package:users/models/usermodel/user_model.dart';
@@ -12,6 +13,7 @@ import 'package:users/screens/bloc/home_event.dart';
 import 'package:users/screens/bloc/home_state.dart';
 import 'package:users/services/hive_service.dart';
 import 'package:users/widgets/listtile_widget.dart';
+import 'package:users/widgets/shimmer_list_view_widget.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -31,9 +33,7 @@ class HomeView extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: ColorConst.kSecondaryColor,
-        
         actions: const [
-          
           Padding(
             padding: EdgeInsets.all(8.0),
             child: CircleAvatar(
@@ -47,8 +47,11 @@ class HomeView extends StatelessWidget {
         child: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
             if (state is HomeLoadingState) {
-              return Center(
-                child: CircularProgressIndicator.adaptive(),
+              return ListView.builder(
+                itemCount: 15,
+                itemBuilder: (context, i){
+                  return ShimmerListTileWidget();
+                }
               );
             }
             if (state is HomeErrorState) {
@@ -56,8 +59,8 @@ class HomeView extends StatelessWidget {
             } else if (state is HomeLoadedState) {
               return RefreshIndicator(
                 onRefresh: () async {
-                   HomeBloc homeBloc = BlocProvider.of<HomeBloc>(context);
-                   homeBloc.add(refreshApiEvent());
+                  HomeBloc homeBloc = BlocProvider.of<HomeBloc>(context);
+                  homeBloc.add(refreshApiEvent());
                 },
                 child: ValueListenableBuilder<Box<UserModel>>(
                   valueListenable: Boxes.instance.getUserBox().listenable(),
