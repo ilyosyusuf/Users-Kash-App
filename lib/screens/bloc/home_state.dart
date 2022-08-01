@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:users/models/usermodel/user_model.dart';
-import 'package:users/repositories/user_repository.dart';
 
 abstract class HomeState extends Equatable {
   const HomeState();
@@ -23,6 +22,6 @@ class HomeLoadedState extends HomeState {
 class HomeErrorState extends HomeState {
   final String message;
   HomeErrorState({required this.message});
-    @override
+  @override
   List<Object> get props => [];
 }
