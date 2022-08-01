@@ -27,10 +27,7 @@ class ListTileWidget extends StatelessWidget {
       width: context.width,
       child: ListTile(
         leading: CircleAvatar(
-          radius: 25,
-          backgroundColor: leadingColor,
-
-          child: Text(userId)),
+            radius: 25, backgroundColor: leadingColor, child: Text(userId)),
         title: Text(userName, overflow: TextOverflow.ellipsis),
         subtitle: Text(userEmail, overflow: TextOverflow.ellipsis),
       ),

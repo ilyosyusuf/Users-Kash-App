@@ -40,7 +40,7 @@ class HomeView extends StatelessWidget {
                   return ListView.builder(
                     itemCount: 15,
                     itemBuilder: (context, i) {
-                      return ShimmerListTileWidget();
+                      return const ShimmerListTileWidget();
                     },
                   );
                 }

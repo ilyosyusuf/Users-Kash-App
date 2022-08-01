@@ -14,7 +14,8 @@ class ShimmerListTileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxAllDecoration.instance.decor(color: ColorConst.kSecondaryColor),
+      decoration:
+          BoxAllDecoration.instance.decor(color: ColorConst.kSecondaryColor),
       margin: const EdgeInsets.all(20),
       width: context.width,
       child: ListTile(
